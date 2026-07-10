@@ -61,7 +61,11 @@ def extract_json_fields(data, nested_keys):
                     continue
                 if is_category_level and k in nested_keys:
                     if isinstance(v, dict):
-                        stack.append((v, True))
+                        # Descend into a category container as non-category-level so its
+                        # child field keys are counted even when a field name collides
+                        # with a category/alias name (e.g. field `basic_info` inside
+                        # category `basic_info`, field `evidence` inside `evidence`).
+                        stack.append((v, False))
                     continue
                 fields.add(k)
         elif isinstance(obj, list):
