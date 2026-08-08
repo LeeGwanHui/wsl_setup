@@ -1,0 +1,83 @@
+topic: Claude Code settings.json / CLAUDE.md 개발자 모범 설정
+topic_slug: claude_code_settings_best_practices
+items:
+  - name: Permissions
+    category: 권한/보안
+    description: allow/deny/ask 규칙, Tool(param:value) 세분화 문법, 파괴적 명령(git reset --hard, terraform destroy 등) 자동 차단, glob 패턴 deny, "*" deny-all
+
+  - name: Hooks
+    category: 자동화/확장
+    description: PreToolUse, PostToolUse, Notification, Stop, SessionStart, SessionEnd/post-session, UserPromptSubmit, PreCompact, SubagentStart/Stop 등 전체 이벤트 훅 체계
+
+  - name: Environment Variables
+    category: 환경/모델
+    description: settings.json의 env 블록 및 CLAUDE_CODE_* 계열 환경변수 플래그 (API 키, 프록시, 디버그, 세이프모드 등)
+
+  - name: Model 설정
+    category: 환경/모델
+    description: model, fallbackModel(최대 3개), availableModels/enforceAvailableModels, includeCoAuthoredBy, thinking/effort 레벨 설정 (MAX_THINKING_TOKENS, /effort)
+
+  - name: StatusLine 커스터마이징
+    category: UI/UX
+    description: 커스텀 상태줄 스크립트 설정 방법과 인기 예시
+
+  - name: MCP 서버 설정
+    category: 연동
+    description: .mcp.json 및 settings 내 MCP 연동, allowedMcpServers/deniedMcpServers 정책
+
+  - name: Subagents
+    category: 자동화/확장
+    description: .claude/agents/*.md 전용 서브에이전트 정의, extended thinking 상속, 5단계 중첩 지원
+
+  - name: Slash Commands
+    category: 자동화/확장
+    description: .claude/commands/*.md 커스텀 커맨드 정의 방식과 인기 패턴
+
+  - name: Output Styles
+    category: UI/UX
+    description: 응답 스타일 커스터마이징 설정
+
+  - name: CLAUDE.md 구조 및 계층
+    category: 메모리/문서
+    description: 섹션 구성, 200줄 이내 권장(context rot 방지), @path import(4단계 중첩), 홈/프로젝트/로컬 3단계 계층, /doctor를 통한 비대화 정리
+
+  - name: Sandbox / 위험 작업 안전설정
+    category: 권한/보안
+    description: dangerouslySkipPermissions, sandbox.credentials, sandbox.allowAppleEvents, 워크트리 격리 등 위험 작업 관련 안전설정 관례
+
+  - name: settings 파일 계층 (user/project/local)
+    category: 메모리/문서
+    description: settings.json vs settings.local.json vs 프로젝트 공유 설정 분리 관례, 개인/팀/레포별 사용 패턴
+
+  - name: Skills
+    category: 자동화/확장
+    description: .claude/skills/*/SKILL.md, 서브에이전트/커맨드와 구분되는 독립 프리미티브, description 기반 모델 트리거, 중첩 디렉토리, 스택 호출(/a /b, 최대 5개), disableBundledSkills
+
+  - name: Plugins & Plugin Marketplaces
+    category: 자동화/확장
+    description: .claude-plugin/plugin.json, marketplace.json, /plugin 커맨드, claude plugin init, 스킬+에이전트+커맨드+훅+MCP를 묶는 배포 표준 단위, 공식 마켓플레이스
+
+  - name: Auto Mode & 권한 분류기
+    category: 권한/보안
+    description: 수동 승인과 --dangerously-skip-permissions 사이의 중간 단계, 별도 분류기가 스코프 확장/프롬프트 인젝션 등을 검증, disableAutoMode, autoMode.classifyAllShell, 기본 권한 모드 명칭(default→manual)
+
+  - name: Rules (경로 스코프 규칙)
+    category: 메모리/문서
+    description: CLAUDE.md와 별개로 파일 경로 매칭시 온디맨드 로드되는 규칙 메커니즘, 컨텍스트 비용/권한 축에서 CLAUDE.md와의 차이
+
+  - name: Managed/Enterprise 정책 설정
+    category: 권한/보안
+    description: managed-settings.json, requiredMinimumVersion/requiredMaximumVersion, allowedMcpServers/deniedMcpServers, 조직 강제 기본 모델 등 최상위 우선순위 정책 레이어
+
+  - name: Telemetry / OpenTelemetry 설정
+    category: 환경/모델
+    description: OTEL_LOG_TOOL_DETAILS, OTEL_LOG_USER_PROMPTS, OTEL_LOG_ASSISTANT_RESPONSES, OTEL_RESOURCE_ATTRIBUTES 등 팀/기업 관측성 구성
+
+  - name: Agent Teams & Dynamic Workflows
+    category: 자동화/확장
+    description: CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS, 세션 내 병렬 에이전트 팀 구성, /workflows, 동적 워크플로 크기 제어(small/medium/large)
+
+execution:
+  batch_size: 5
+  items_per_agent: 1
+  output_dir: ./results

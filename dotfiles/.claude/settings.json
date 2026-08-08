@@ -1,0 +1,95 @@
+{
+  "model": "opus",
+
+  "permissions": {
+    "defaultMode": "auto",
+
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/id_rsa)",
+      "Read(**/id_ed25519)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/credentials)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fdx:*)"
+    ],
+
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(npm publish:*)",
+      "Bash(sudo:*)"
+    ]
+  },
+
+  "autoMode": {
+    "classifyAllShell": true,
+    "environment": [
+      "$defaults",
+      "Personal single-user WSL2 Ubuntu development machine. No production access from this host.",
+      "Projects live under ~/dev. ~/dev/playground is scratch work, ~/dev/projects is real work.",
+      "Source control: github.com, personal account. No company/internal registries.",
+      "Shell config lives in ~/dev/projects/wsl_setup/dotfiles and is symlinked/copied into $HOME."
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Never rewrite or overwrite files under ~/dev/projects/wsl_setup/dotfiles without saying so first: they are the source of truth for this machine's shell environment.",
+      "Never modify ~/.claude/settings.json, ~/.claude/CLAUDE.md, or ~/.claude/skills/** without explicit instruction: they change how every future session behaves."
+    ]
+  },
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/guard.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+
+  "workflowSizeGuideline": "small",
+
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "understand-anything@understand-anything": true,
+    "watch@claude-video": true,
+    "agentmemory@agentmemory": false
+  },
+
+  "extraKnownMarketplaces": {
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
+      }
+    },
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
+      }
+    },
+    "agentmemory": {
+      "source": {
+        "source": "github",
+        "repo": "rohitg00/agentmemory"
+      }
+    }
+  },
+
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
+}
